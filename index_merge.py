@@ -33,16 +33,23 @@ def index_merge(file1:str, file2:str, newfile:str):
 
 
 if '__main__' == __name__:
-    file1 = sys.argv[1]
-    file2 = sys.argv[2]
-    newfile = sys.argv[3]
+    #解析命令
     dir, pyfile = os.path.split(sys.argv[0])
-    if dir != "":
-        #第一个参数使用绝对路径
-        if os.path.isabs(dir):
-            os.chdir(dir)
-        #相对路径
-        else:
-            os.chdir(os.path.join(os.getcwd(),dir[2:]))
-    index_merge(file1, file2, newfile)
+    parser = argparse.ArgumentParser(description="usage: "+pyfile+" file1 file2 newfile")
+    parser.add_argument("file1", help="first index file")
+    parser.add_argument("file2", help="second index file")
+    parser.add_argument("newfile", help="new index file")
+    args = parser.parse_args()
+    
+    #工作路径移动至.py文件所在目录
+    if dir!="":
+        os.chdir(dir)
+    # if dir != "":
+    #     #第一个参数使用绝对路径
+    #     if os.path.isabs(dir):
+    #         os.chdir(dir)
+    #     #相对路径
+    #     else:
+    #         os.chdir(os.path.join(os.getcwd(),dir[2:]))
+    index_merge(args.file1, args.file2, args.newfile)
 
