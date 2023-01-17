@@ -6,9 +6,12 @@ import pandas as pd
 import io
 import argparse
 
+#从file1和file2两个文件提取数据，写入newfile，抛弃注释
 def index_merge(file1:str, file2:str, newfile:str):
+    #提取两个index文件的数据
     commentlines1, lines1 = remove_comment(file1)
     commentlines2, lines2 = remove_comment(file2)
+    #向新文件写入
     with open(newfile, 'w') as nf:
         nf.write("".join(lines1))
         nf.write("".join(lines2))
