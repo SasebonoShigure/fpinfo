@@ -2,6 +2,7 @@
 
 from indexextract import *
 import sys
+import os
 import pandas as pd
 import io
 import argparse
@@ -16,7 +17,7 @@ def index_merge(file1:str, file2:str, newfile:str):
         nf.write("".join(lines1))
         nf.write("".join(lines2))
         nf.close()
-    print("merge finished\n")
+    #print("merge finished\n")
 
 
 
@@ -35,4 +36,13 @@ if '__main__' == __name__:
     file1 = sys.argv[1]
     file2 = sys.argv[2]
     newfile = sys.argv[3]
+    dir, pyfile = os.path.split(sys.argv[0])
+    if dir != "":
+        #第一个参数使用绝对路径
+        if os.path.isabs(dir):
+            os.chdir(dir)
+        #相对路径
+        else:
+            os.chdir(os.path.join(os.getcwd(),dir[2:]))
     index_merge(file1, file2, newfile)
+
